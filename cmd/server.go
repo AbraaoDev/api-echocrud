@@ -39,6 +39,7 @@ func main(){
 	server.POST("/establishment", EstablishmentHandler.CreateEstablishment)
 	server.GET("/establishment/:establishmentId", EstablishmentHandler.GetEstablishmentById)
 	server.DELETE("/establishment/:establishmentId", EstablishmentHandler.DeleteEstablishment)
+	server.PUT("/establishment/:establishmentId", EstablishmentHandler.UpdateEstablishment)
 
 	log.Println("🚀 Server Running")
 	server.Logger.Fatal(server.Start(":3333"))
