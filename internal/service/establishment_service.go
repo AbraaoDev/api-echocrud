@@ -19,3 +19,12 @@ func NewEstablishmentService(repo repository.EstablishmentRepository) Establishm
 func (es *EstablishmentService) GetAll() ([]entities.Establishment, error) {
 	return es.repository.GetAll()
 }
+
+func (es *EstablishmentService) CreateEstablishment(establishment entities.Establishment) (entities.Establishment, error) {
+	establishmentId, err := es.repository.CreateEstablishment(&establishment)
+	if(err != nil){
+		return entities.Establishment{}, err
+	}
+	establishment.ID = establishmentId
+	return establishment, nil
+}
