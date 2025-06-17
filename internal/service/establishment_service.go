@@ -37,10 +37,24 @@ func (es *EstablishmentService) GetEstablishmentById(id_establishment uint) (*en
 		return nil, err
 	}
 
+	if establishment == nil {
+		return nil, ErrEstablishmentNotFound
+	}
+
 	return establishment, err
 }
 
 func (es *EstablishmentService) DeleteEstablishment(id uint) error {
+	// checar se existe o estabelecimento
+	existingEstablishment, err := es.repository.GetEstablishmentById(id)
+	if err != nil {
+		return err
+	}
+	
+	if existingEstablishment == nil {
+		return ErrEstablishmentNotFound
+	}
+
 	hasStores, err := es.repository.HasStores(id)
 	if err != nil {
 		return err
@@ -53,3 +67,26 @@ func (es *EstablishmentService) DeleteEstablishment(id uint) error {
 	return es.repository.DeleteEstablishment(id)
 }
 
+
+func (es *EstablishmentService) UpdateEstablishment(id uint, establishmentData entity.Establishment) (*entity.Establishment, error) {
+	existingEstablishment, err := es.repository.GetEstablishmentById(id)
+	if err != nil {
+		return nil, err 
+	}
+
+	if existingEstablishment == nil {
+		return nil, ErrEstablishmentNotFound 
+	}
+
+	err = es.repository.UpdateEstablishment(id, &establishmentData)
+	if err != nil {
+		return nil, err 
+	}
+
+	updatedEstablishment, err := es.repository.GetEstablishmentById(id)
+	if err != nil {
+		return nil, err 
+	}
+
+	return updatedEstablishment, nil
+}

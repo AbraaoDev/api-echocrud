@@ -2,6 +2,7 @@ package repository
 
 import (
 	"echocrud/internal/entity"
+	"errors"
 
 	"gorm.io/gorm"
 )
@@ -24,9 +25,12 @@ func (er *EstablishmentRepository) GetAll() ([]entity.Establishment, error) {
 
 func (er *EstablishmentRepository) GetEstablishmentById(id_establishment uint) (*entity.Establishment, error) {
 	var establishment entity.Establishment
-	err := er.db.Find(&establishment, id_establishment).Error
+	err := er.db.First(&establishment, id_establishment).Error
 	if err != nil {
-		return nil, err
+		if errors.Is(err, gorm.ErrRecordNotFound) { 
+			return nil, nil 
+		}
+		return nil, err 
 	}
 
 	return &establishment, nil
@@ -42,7 +46,6 @@ func (er *EstablishmentRepository) CreateEstablishment(establishment *entity.Est
 }
 
 func (er *EstablishmentRepository) DeleteEstablishment(id_establishment uint) error {
-	//er.db.Unscoped().Delete(&entity.Establishment{}, id).Error   
 	return er.db.Delete(&entity.Establishment{}, id_establishment).Error
 }
 
@@ -58,3 +61,6 @@ func (er *EstablishmentRepository) HasStores(id_establishment uint) (bool, error
 	return count > 0, nil
 }
 
+func (er *EstablishmentRepository) UpdateEstablishment(id_establishment uint, establishment *entity.Establishment) error {
+	return er.db.Model(&entity.Establishment{}).Where("id = ?", id_establishment).Updates(establishment).Error
+}
