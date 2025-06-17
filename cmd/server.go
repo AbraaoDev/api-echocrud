@@ -28,6 +28,7 @@ func main(){
 	//Routes
 	server.GET("/establishments", EstablishmentHandler.GetAll)
 	server.POST("/establishment", EstablishmentHandler.CreateEstablishment)
+	server.GET("/establishment/:establishmentId", EstablishmentHandler.GetEstablishmentById)
 
 	log.Println("🚀 Server Running")
 	server.Logger.Fatal(server.Start(":3333"))

@@ -1,7 +1,7 @@
 package service
 
 import (
-	"echocrud/internal/entities"
+	"echocrud/internal/entity"
 	"echocrud/internal/repository"
 )
 
@@ -16,15 +16,25 @@ func NewEstablishmentService(repo repository.EstablishmentRepository) Establishm
 	}
 }
 
-func (es *EstablishmentService) GetAll() ([]entities.Establishment, error) {
+func (es *EstablishmentService) GetAll() ([]entity.Establishment, error) {
 	return es.repository.GetAll()
 }
 
-func (es *EstablishmentService) CreateEstablishment(establishment entities.Establishment) (entities.Establishment, error) {
+func (es *EstablishmentService) CreateEstablishment(establishment entity.Establishment) (entity.Establishment, error) {
 	establishmentId, err := es.repository.CreateEstablishment(&establishment)
 	if(err != nil){
-		return entities.Establishment{}, err
+		return entity.Establishment{}, err
 	}
 	establishment.ID = establishmentId
 	return establishment, nil
+}
+
+
+func (es *EstablishmentService) GetEstablishmentById(id_establishment uint) (*entity.Establishment, error) {
+	establishment, err := es.repository.GetEstablishmentById(id_establishment)
+	if(err != nil){
+		return nil, err
+	}
+
+	return establishment, err
 }

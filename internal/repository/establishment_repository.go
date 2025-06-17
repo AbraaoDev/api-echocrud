@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"echocrud/internal/entities"
+	"echocrud/internal/entity"
 
 	"gorm.io/gorm"
 )
@@ -16,13 +16,23 @@ func NewEstablishmentRepository(db *gorm.DB) EstablishmentRepository {
 	}
 }
 
-func (er *EstablishmentRepository) GetAll() ([]entities.Establishment, error) {
-    var establishments []entities.Establishment
+func (er *EstablishmentRepository) GetAll() ([]entity.Establishment, error) {
+    var establishments []entity.Establishment
     err := er.db.Find(&establishments).Error
     return establishments, err
 }
 
-func (er *EstablishmentRepository) CreateEstablishment(establishment *entities.Establishment) (uint, error) {
+func (er *EstablishmentRepository) GetEstablishmentById(id_establishment uint) (*entity.Establishment, error) {
+	var establishment entity.Establishment
+	err := er.db.Find(&establishment, id_establishment).Error
+	if err != nil {
+		return nil, err
+	}
+
+	return &establishment, nil
+}
+
+func (er *EstablishmentRepository) CreateEstablishment(establishment *entity.Establishment) (uint, error) {
 	err := er.db.Create(establishment).Error
 	if err != nil {
 		return 0, err

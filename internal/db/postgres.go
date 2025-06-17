@@ -1,7 +1,7 @@
 package db
 
 import (
-	"echocrud/internal/entities"
+	"echocrud/internal/entity"
 	"fmt"
 	"log"
 	"os"
@@ -55,7 +55,7 @@ func NewPostgresConnection() *gorm.DB {
 
 	// Auto Migrate
 	log.Println("🔄 Running database migrations...")
-	err = db.AutoMigrate(&entities.Establishment{}, &entities.Store{})
+	err = db.AutoMigrate(&entity.Establishment{}, &entity.Store{})
 	if err != nil {
 		log.Fatalf("failed to migrate database: %v", err)
 	}

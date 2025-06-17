@@ -1,9 +1,13 @@
-package entities
+package entity
 
-import "gorm.io/gorm"
+import (
+	"time"
+
+	"gorm.io/gorm"
+)
 
 type Establishment struct {
-	gorm.Model
+	gorm.Model //percebi que o Id não é uma boa prática, pois gera ID's sequenciais 
 	Name            string  `gorm:"type:varchar(255);not null" json:"name"`
 	CorporateNumber string  `json:"corporate_number" gorm:"unique;not null"`
 	CorporateName   string  `json:"corporate_name" gorm:"not null"`
@@ -12,5 +16,8 @@ type Establishment struct {
 	State           string  `json:"state" gorm:"not null;size:2"`
 	ZipCode         string  `json:"zip_code" gorm:"not null;size:10"`
 	Number          string  `json:"number" gorm:"not null"`
+	CreatedAt time.Time
+UpdatedAt time.Time
+DeletedAt gorm.DeletedAt `gorm:"index"`
 	Stores          []Store `gorm:"constraint:OnUpdate:CASCADE,OnDelete:CASCADE;" json:"stores"`
 }
