@@ -5,6 +5,7 @@ import (
 	"echocrud/internal/handler"
 	"echocrud/internal/repository"
 	"echocrud/internal/service"
+	"log"
 
 	"github.com/labstack/echo/v4"
 )
@@ -24,12 +25,9 @@ func main(){
 	// Handlers
 	EstablishmentHandler := handler.NewEstablishmentHandler(EstablishmentService)
 
-	// Routes
-	server.GET("/", func(c echo.Context) error{
-		return c.JSON(200, "Hello, World")
-	})
-
+	//Routes
 	server.GET("/establishments", EstablishmentHandler.GetAll)
 
+	log.Println("🚀 Server Running")
 	server.Logger.Fatal(server.Start(":3333"))
 }
