@@ -40,3 +40,21 @@ func (er *EstablishmentRepository) CreateEstablishment(establishment *entity.Est
 
 	return establishment.ID, nil
 }
+
+func (er *EstablishmentRepository) DeleteEstablishment(id_establishment uint) error {
+	//er.db.Unscoped().Delete(&entity.Establishment{}, id).Error   
+	return er.db.Delete(&entity.Establishment{}, id_establishment).Error
+}
+
+
+func (er *EstablishmentRepository) HasStores(id_establishment uint) (bool, error) {
+	// -> Fazer um delete real do db
+	var count int64
+	err := er.db.Model(&entity.Store{}).Where("establishment_id", id_establishment).Count(&count).Error
+	if err != nil {
+		return false, err
+	}
+
+	return count > 0, nil
+}
+

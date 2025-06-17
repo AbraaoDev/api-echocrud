@@ -3,6 +3,7 @@ package service
 import (
 	"echocrud/internal/entity"
 	"echocrud/internal/repository"
+	"fmt"
 )
 
 
@@ -38,3 +39,17 @@ func (es *EstablishmentService) GetEstablishmentById(id_establishment uint) (*en
 
 	return establishment, err
 }
+
+func (es *EstablishmentService) DeleteEstablishment(id uint) error {
+	hasStores, err := es.repository.HasStores(id)
+	if err != nil {
+		return err
+	}
+
+	if hasStores {
+		return fmt.Errorf("cannot delete establishment: there are stores associated with this establishment")
+	}
+
+	return es.repository.DeleteEstablishment(id)
+}
+

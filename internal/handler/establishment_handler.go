@@ -89,3 +89,38 @@ func (e *establishmentHandler) GetEstablishmentById(c echo.Context) error {
 	return c.JSON(http.StatusOK, estab)
 
 }
+
+func (e *establishmentHandler) DeleteEstablishment(c echo.Context) error {
+	id := c.Param("establishmentId")
+	if (id == "") {
+		response := entity.Response{
+			Message: "EstablishmentId cannot be null",
+		}
+		return c.JSON(http.StatusBadRequest, response)
+	}
+
+	estab, err := strconv.ParseUint(id, 10, 32)
+	if(err != nil ){
+		response := entity.Response{
+			Message: "EstablishmentId must be a number",
+		}
+		return c.JSON(http.StatusBadRequest, response)
+	}
+
+	err = e.establishmentService.DeleteEstablishment(uint(estab))
+	if err != nil {
+		response := entity.Response{
+			Message: "Internal Server Error",
+		}
+		return c.JSON(http.StatusInternalServerError, response)
+	}
+
+	if estab == 0 {
+		response := entity.Response{
+			Message: "Establishment not found.",
+		}
+		return c.JSON(http.StatusNotFound, response)
+	}
+
+	return c.JSON(http.StatusOK, estab)
+}
