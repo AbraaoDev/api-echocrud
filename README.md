@@ -3,11 +3,11 @@
 Bem-vindo ao projeto da EchoCRUD! Este repositório contém o código-fonte de uma API RESTful, projetada para gerenciar Estabelecimentos e Lojas.
 
 > [!IMPORTANT]
-> • Testes Unitários
+> 🔄 Testes Unitários
 >
-> • SOLID
+> 🔄 SOLID
 >
-> • Docker (Frontend + Backend)
+> 🔄 Docker (Frontend + Backend)
 
 
 ## 🧪 Technologies[Front-End]
