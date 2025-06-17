@@ -8,10 +8,19 @@ import (
 	"log"
 
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
 func main(){
 	server := echo.New()
+
+	//Middleware + CORS
+	server.Use(middleware.Logger())   
+	server.Use(middleware.Recover())  
+	server.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000"}, 
+		AllowMethods: []string{"GET", "POST", "PUT", "DELETE"},
+	}))
 
 	// Database
 	database := db.NewPostgresConnection()
