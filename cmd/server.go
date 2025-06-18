@@ -4,6 +4,7 @@ import (
 	"echocrud/internal/db"
 	"echocrud/internal/handler"
 	"echocrud/internal/repository"
+	"echocrud/internal/router"
 	"echocrud/internal/seeder"
 	"echocrud/internal/service"
 	"flag"
@@ -52,20 +53,23 @@ func main() {
 	EstablishmentHandler := handler.NewEstablishmentHandler(EstablishmentService)
 	StoreHandler := handler.NewStoreHandler(StoreService)
 
-	//Routes -> Establishments
-	server.GET("/establishments", EstablishmentHandler.GetAll)
-	server.POST("/establishment", EstablishmentHandler.CreateEstablishment)
-	server.GET("/establishment/:establishmentId", EstablishmentHandler.GetEstablishmentById)
-	server.DELETE("/establishment/:establishmentId", EstablishmentHandler.DeleteEstablishment)
-	server.PUT("/establishment/:establishmentId", EstablishmentHandler.UpdateEstablishment)
+	//Routes
+	router.RegisterRoutes(server, EstablishmentHandler, StoreHandler)
 
-	//Routes -> Stores
-	server.GET("/establishments/:establishmentId/stores", StoreHandler.GetAllStoresByEstablishment)
-	server.POST("/establishments/:establishmentId/stores", StoreHandler.CreateStore)
-	server.GET("/stores/:storeId", StoreHandler.GetStoreByID)
-	server.PUT("/stores/:storeId", StoreHandler.UpdateStore)
-	server.DELETE("/stores/:storeId", StoreHandler.DeleteStore)
+	// //Routes -> Establishments
+	// server.GET("/establishments", EstablishmentHandler.GetAll)
+	// server.POST("/establishment", EstablishmentHandler.CreateEstablishment)
+	// server.GET("/establishment/:establishmentId", EstablishmentHandler.GetEstablishmentById)
+	// server.DELETE("/establishment/:establishmentId", EstablishmentHandler.DeleteEstablishment)
+	// server.PUT("/establishment/:establishmentId", EstablishmentHandler.UpdateEstablishment)
 
-	log.Println("🚀 Server Running")
+	// //Routes -> Stores
+	// server.GET("/establishments/:establishmentId/stores", StoreHandler.GetAllStoresByEstablishment)
+	// server.POST("/establishments/:establishmentId/stores", StoreHandler.CreateStore)
+	// server.GET("/stores/:storeId", StoreHandler.GetStoreByID)
+	// server.PUT("/stores/:storeId", StoreHandler.UpdateStore)
+	// server.DELETE("/stores/:storeId", StoreHandler.DeleteStore)
+
+	log.Println("🚀 Server Running in /api/v1")
 	server.Logger.Fatal(server.Start(":3333"))
 }

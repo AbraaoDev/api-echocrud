@@ -10,17 +10,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type establishmentHandler struct {
+type EstablishmentHandler struct {
 	establishmentService service.EstablishmentService
 }
 
-func NewEstablishmentHandler(service service.EstablishmentService) establishmentHandler {
-	return establishmentHandler{
+func NewEstablishmentHandler(service service.EstablishmentService) *EstablishmentHandler {
+	return &EstablishmentHandler{
 		establishmentService: service,
 	}
 }
 
-func (e *establishmentHandler) GetAll(c echo.Context) error {
+func (e *EstablishmentHandler) GetAll(c echo.Context) error {
 	ests, err := e.establishmentService.GetAll()
 	if err != nil {
 		response := entity.Response{
@@ -32,7 +32,7 @@ func (e *establishmentHandler) GetAll(c echo.Context) error {
 
 }
 
-func (e *establishmentHandler) CreateEstablishment(c echo.Context) error {
+func (e *EstablishmentHandler) CreateEstablishment(c echo.Context) error {
 	var establishment entity.Establishment
 
 	err := c.Bind(&establishment)
@@ -56,7 +56,7 @@ func (e *establishmentHandler) CreateEstablishment(c echo.Context) error {
 
 }
 
-func (e *establishmentHandler) GetEstablishmentById(c echo.Context) error {
+func (e *EstablishmentHandler) GetEstablishmentById(c echo.Context) error {
 	id := c.Param("establishmentId")
 	if id == "" {
 		response := entity.Response{
@@ -91,7 +91,7 @@ func (e *establishmentHandler) GetEstablishmentById(c echo.Context) error {
 
 }
 
-func (e *establishmentHandler) DeleteEstablishment(c echo.Context) error {
+func (e *EstablishmentHandler) DeleteEstablishment(c echo.Context) error {
 	id := c.Param("establishmentId")
 	if id == "" {
 		response := entity.Response{
@@ -132,7 +132,7 @@ func (e *establishmentHandler) DeleteEstablishment(c echo.Context) error {
 }
 
 
-func (e *establishmentHandler) UpdateEstablishment(c echo.Context) error {
+func (e *EstablishmentHandler) UpdateEstablishment(c echo.Context) error {
 	id := c.Param("establishmentId")
 	if id == "" {
 		response := entity.Response{Message: "EstablishmentId cannot be null"}

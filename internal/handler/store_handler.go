@@ -10,17 +10,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type storeHandler struct {
+type StoreHandler struct {
 	storeService service.StoreService
 }
 
-func NewStoreHandler(service service.StoreService) storeHandler {
-	return storeHandler{
+func NewStoreHandler(service service.StoreService) *StoreHandler {
+	return &StoreHandler{
 		storeService: service,
 	}
 }
 
-func (h *storeHandler) CreateStore(c echo.Context) error {
+func (h *StoreHandler) CreateStore(c echo.Context) error {
 	establishmentIdStr := c.Param("establishmentId")
 	establishmentId, err := strconv.ParseUint(establishmentIdStr, 10, 32)
 	if err != nil {
@@ -44,7 +44,7 @@ func (h *storeHandler) CreateStore(c echo.Context) error {
 	return c.JSON(http.StatusCreated, createdStore)
 }
 
-func (h *storeHandler) GetAllStoresByEstablishment(c echo.Context) error {
+func (h *StoreHandler) GetAllStoresByEstablishment(c echo.Context) error {
 	establishmentIdStr := c.Param("establishmentId")
 	establishmentId, err := strconv.ParseUint(establishmentIdStr, 10, 32)
 	if err != nil {
@@ -62,7 +62,7 @@ func (h *storeHandler) GetAllStoresByEstablishment(c echo.Context) error {
 	return c.JSON(http.StatusOK, stores)
 }
 
-func (h *storeHandler) GetStoreByID(c echo.Context) error {
+func (h *StoreHandler) GetStoreByID(c echo.Context) error {
 	storeIdStr := c.Param("storeId")
 	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
 	if err != nil {
@@ -80,7 +80,7 @@ func (h *storeHandler) GetStoreByID(c echo.Context) error {
 	return c.JSON(http.StatusOK, store)
 }
 
-func (h *storeHandler) UpdateStore(c echo.Context) error {
+func (h *StoreHandler) UpdateStore(c echo.Context) error {
 	storeIdStr := c.Param("storeId")
 	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
 	if err != nil {
@@ -103,7 +103,7 @@ func (h *storeHandler) UpdateStore(c echo.Context) error {
 	return c.JSON(http.StatusOK, updatedStore)
 }
 
-func (h *storeHandler) DeleteStore(c echo.Context) error {
+func (h *StoreHandler) DeleteStore(c echo.Context) error {
 	storeIdStr := c.Param("storeId")
 	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
 	if err != nil {
