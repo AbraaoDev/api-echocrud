@@ -4,14 +4,21 @@ import (
 	"echocrud/internal/db"
 	"echocrud/internal/handler"
 	"echocrud/internal/repository"
+	"echocrud/internal/seeder"
 	"echocrud/internal/service"
+	"flag"
 	"log"
+	"os"
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
 
 func main() {
+
+	runSeed := flag.Bool("seed", false, "Run to populate the database with initial data")
+	flag.Parse()
+
 	server := echo.New()
 
 	//Middleware + CORS
@@ -24,6 +31,14 @@ func main() {
 
 	// Database
 	database := db.NewPostgresConnection()
+
+	//seed
+	if *runSeed {
+		log.Println("Starting seeder execution...")
+		seeder.Seed(database)
+		log.Println("Seeder executed successfully. The application will now exit.")
+		os.Exit(0) 
+	}
 
 	// Repositories
 	EstablishmentRepository := repository.NewEstablishmentRepository(database)
