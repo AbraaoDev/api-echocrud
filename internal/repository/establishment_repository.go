@@ -19,7 +19,9 @@ func NewEstablishmentRepository(db *gorm.DB) EstablishmentRepository {
 
 func (er *EstablishmentRepository) GetAll() ([]entity.Establishment, error) {
     var establishments []entity.Establishment
-    err := er.db.Find(&establishments).Error
+
+		// necessário preload, pois o lazy loading do gorm não carrega por padrão os relacionamentos
+    err := er.db.Preload("Stores").Find(&establishments).Error
     return establishments, err
 }
 

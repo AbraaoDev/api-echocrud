@@ -128,7 +128,7 @@ func (e *establishmentHandler) DeleteEstablishment(c echo.Context) error {
 		}
 	}
 
-	return c.JSON(http.StatusOK, estab)
+	return c.JSON(http.StatusOK, entity.Response{Message: "Establishment deleted successfully"})
 }
 
 

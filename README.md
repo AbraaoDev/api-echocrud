@@ -10,6 +10,29 @@ Bem-vindo ao projeto da EchoCRUD! Este repositório contém o código-fonte de u
 > 🔄 Docker (Frontend + Backend)
 
 
+## 🎯 Endpoints
+
+### Establishments
+
+|         Endpoint        |                    Router                    |                 Description                 |
+|:-----------------------:|:--------------------------------------------:|:-------------------------------------------:|
+| **[`get`](#get)**       | `/establishments`                            | Buscar todos os estabelecimentos            |
+| **[`post`](#post)**     | `/establishment`                             | Criar um novo estabelecimento               |
+| **[`get`](#get)**       | `/establishment/{establishmentId}`           | Buscar estabelecimento por ID               |
+| **[`put`](#put)**       | `/establishment/{establishmentId}`           | Atualizar estabelecimento existente         |
+| **[`delete`](#delete)** | `/establishment/{establishmentId}`           | Deletar estabelecimento por ID              |
+
+### Stores
+
+|         Endpoint        |                    Router                    |                 Description                 |
+|:-----------------------:|:--------------------------------------------:|:-------------------------------------------:|
+| **[`get`](#get)**       | `/establishments/{establishmentId}/stores`   | Buscar todas as lojas de um estabelecimento |
+| **[`post`](#post)**     | `/establishments/{establishmentId}/stores`   | Criar nova loja em um estabelecimento       |
+| **[`get`](#get)**       | `/stores/{storeId}`                          | Buscar loja por ID                          |
+| **[`put`](#put)**       | `/stores/{storeId}`                          | Atualizar loja existente                    |
+| **[`delete`](#delete)** | `/stores/{storeId}`                          | Deletar loja por ID                         |
+
+
 ## 🧪 Technologies[Front-End]
 
 This project was developed using the following technologies:

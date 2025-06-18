@@ -1,0 +1,122 @@
+package handler
+
+import (
+	"echocrud/internal/entity"
+	"echocrud/internal/service"
+	"errors"
+	"net/http"
+	"strconv"
+
+	"github.com/labstack/echo/v4"
+)
+
+type storeHandler struct {
+	storeService service.StoreService
+}
+
+func NewStoreHandler(service service.StoreService) storeHandler {
+	return storeHandler{
+		storeService: service,
+	}
+}
+
+func (h *storeHandler) CreateStore(c echo.Context) error {
+	establishmentIdStr := c.Param("establishmentId")
+	establishmentId, err := strconv.ParseUint(establishmentIdStr, 10, 32)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "establishmentId invalid"})
+	}
+
+	var store entity.Store
+	if err := c.Bind(&store); err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "Format JSON invalid"})
+	}
+
+	store.EstablishmentID = uint(establishmentId) 
+	createdStore, err := h.storeService.CreateStore(store)
+	if err != nil {
+		if errors.Is(err, service.ErrEstablishmentNotFound) {
+			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
+		}
+		return c.JSON(http.StatusInternalServerError, entity.Response{Message: "Error creating store"})
+	}
+
+	return c.JSON(http.StatusCreated, createdStore)
+}
+
+func (h *storeHandler) GetAllStoresByEstablishment(c echo.Context) error {
+	establishmentIdStr := c.Param("establishmentId")
+	establishmentId, err := strconv.ParseUint(establishmentIdStr, 10, 32)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "establishmentId invalid"})
+	}
+
+	stores, err := h.storeService.GetAllStoresByEstablishment(uint(establishmentId))
+	if err != nil {
+		if errors.Is(err, service.ErrEstablishmentNotFound) {
+			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
+		}
+		return c.JSON(http.StatusInternalServerError, entity.Response{Message: "Error searching stores"})
+	}
+
+	return c.JSON(http.StatusOK, stores)
+}
+
+func (h *storeHandler) GetStoreByID(c echo.Context) error {
+	storeIdStr := c.Param("storeId")
+	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "storeId invalid"})
+	}
+
+	store, err := h.storeService.GetStoreByID(uint(storeId))
+	if err != nil {
+		if errors.Is(err, service.ErrStoreNotFound) {
+			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
+		}
+		return c.JSON(http.StatusInternalServerError, entity.Response{Message: "Error searching store"})
+	}
+
+	return c.JSON(http.StatusOK, store)
+}
+
+func (h *storeHandler) UpdateStore(c echo.Context) error {
+	storeIdStr := c.Param("storeId")
+	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "storeId invalid"})
+	}
+
+	var storeToUpdate entity.Store
+	if err := c.Bind(&storeToUpdate); err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "Format JSON invalid"})
+	}
+
+	updatedStore, err := h.storeService.UpdateStore(uint(storeId), storeToUpdate)
+	if err != nil {
+		if errors.Is(err, service.ErrStoreNotFound) {
+			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
+		}
+		return c.JSON(http.StatusInternalServerError, entity.Response{Message: "Error updating store"})
+	}
+
+	return c.JSON(http.StatusOK, updatedStore)
+}
+
+func (h *storeHandler) DeleteStore(c echo.Context) error {
+	storeIdStr := c.Param("storeId")
+	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "storeId invalid"})
+	}
+
+	err = h.storeService.DeleteStore(uint(storeId))
+	if err != nil {
+		if errors.Is(err, service.ErrStoreNotFound) {
+			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
+		}
+		return c.JSON(http.StatusInternalServerError, entity.Response{Message: "Error deleting store"})
+	}
+
+	return c.JSON(http.StatusOK, entity.Response{Message: "Store deleted successfully"})
+}
