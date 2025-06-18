@@ -36,7 +36,7 @@ Bem-vindo ao projeto da EchoCRUD! Este repositório contém o código-fonte de u
 
 To make API testing easier, a Postman collection is included in this repository. You can import it with a single click using the button below.
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.com/run-collection/fork?collection_url=https://raw.githubusercontent.com/AbraaoDev/echocrud/refs/heads/main/postman/EchoCRUD_API.collection.json)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://api.postman.com/collections/38248876-076684d1-ba80-45fd-b45c-37aede86f81b?access_key=PMAT-01JY0CZH5WEFMRTFTK177J1ZNT)
 
 
 
