@@ -1,4 +1,4 @@
-FROM golang:1.24-alpine as stage1
+FROM golang:1.24-alpine as stage
 
 RUN apk add --no-cache tzdata
 
@@ -15,9 +15,9 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o server cmd/server.go
 FROM scratch
 
 # apenas o binario
-COPY --from=stage1 /app/server /server
+COPY --from=stage /app/server /server
 
-COPY --from=stage1 /usr/share/zoneinfo /usr/share/zoneinfo
+COPY --from=stage /usr/share/zoneinfo /usr/share/zoneinfo
 
 EXPOSE 3333
 
