@@ -11,6 +11,20 @@ services:
       POSTGRES_DB: ${DB_NAME}
     volumes:
       - echocrud_db:/bitnami/postgresql
+  api:
+    container_name: echocrud-api
+    build: .
+    restart: always
+    ports:
+      - "3333:3333"
+    environment:
+      DB_HOST: postgres
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_PORT: ${DB_PORT}
+    depends_on:
+      - postgres
 
 volumes:
   echocrud_db:

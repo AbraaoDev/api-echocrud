@@ -71,13 +71,7 @@ This project was developed using the following technologies:
     DB_NAME=echocrud
     ```
 
-3. Run Database in Docker (ah the root path)
-
-    ```zsh
-    docker compose up -d
-    ```
-
-5. Install the dependencies
+3. Install the dependencies
 
     ```zsh
     go mod tidy
@@ -85,18 +79,21 @@ This project was developed using the following technologies:
 
 4. **Execute aplication**
 
-    You have two options to run the backend (run the commands from the project root):
+    Unic command for build image API and Database
+      ```zsh
+      docker-compose up --build -d
+      ```
 
-  * **A) To populate the database with initial data (Seed):**
+  * **A) To populate the database in Execution (Seed):**
 
     ```zsh
-    go run server.go -seed
+    docker compose exec api /server --seed
     ```
 
-  * **B) To start the API server:**
+  * **B) Stop Aplication:**
 
     ```zsh
-    go run server.go
+    docker compose down
     ```
 
 
