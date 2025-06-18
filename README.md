@@ -50,6 +50,52 @@ This project was developed using the following technologies:
 - [gORM](https://gorm.io/)
 - [PostgreSQL](https://gorm.io/)
 
+## 🚀 Getting started
+
+* [**Go**](https://go.dev/doc/install) (version 1.24)
+* [**Docker**](https://docs.docker.com/engine/install/) **Docker Compose**
+
+1. Clone the project and access the folder
+
+    ```zsh
+    $ git clone https://github.com/abraaodev/echocrud.git && cd echocrud
+    ```
+
+2. Create .env
+
+    ```env
+    DB_HOST=localhost
+    DB_PORT=5432
+    DB_USER=docker
+    DB_PASSWORD=docker
+    DB_NAME=echocrud
+    ```
+
+3. Run Database in Docker (ah the root path)
+
+    ```zsh
+    docker compose up -d
+    ```
+
+5. Install the dependencies
+
+    ```zsh
+    go mod tidy
+    ```
+
+4. Populate your Database with Seeds (path /cmd)
+
+    ```zsh
+    go run server.go --seed
+    ```
+
+5. Start the Server
+
+    ```zsh
+    go run server.go
+    ```
+
+
 ## 📝 License
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) file for details.
