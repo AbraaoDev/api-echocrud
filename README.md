@@ -38,21 +38,14 @@ To make API testing easier, a Postman collection is included in this repository.
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://api.postman.com/collections/38248876-076684d1-ba80-45fd-b45c-37aede86f81b?access_key=PMAT-01JY0CZH5WEFMRTFTK177J1ZNT)
 
+1. Download the file EchoCRUD_API.collection.json.
+2. Open Postman and click File > Import....
+3. Select the file you downloaded.
+4. The "EchoCRUD API" collection will appear in your list of Postman collections.
 
 
-## 🧪 Technologies[Front-End]
-
-This project was developed using the following technologies:
-
-- [VueJs](https://vitejs.dev/)
-- [Shadcn-Vue](https://www.shadcn-vue.com/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Tailwind](https://tailwindcss.com/)
-- [Zod](https://github.com/colinhacks/zod)
-
-
-## 🧪 Technologies[Back-End]
-
+## Technologies
+### Backend
 - [Echo(GO)](https://echo.labstack.com/)
 - [gORM](https://gorm.io/)
 - [PostgreSQL](https://gorm.io/)
