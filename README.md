@@ -83,13 +83,17 @@ This project was developed using the following technologies:
     go mod tidy
     ```
 
-4. Populate your Database with Seeds (path /cmd)
+4. **Execute aplication**
+
+    You have two options to run the backend (run the commands from the project root):
+
+  * **A) To populate the database with initial data (Seed):**
 
     ```zsh
-    go run server.go --seed
+    go run server.go -seed
     ```
 
-5. Start the Server
+  * **B) To start the API server:**
 
     ```zsh
     go run server.go
