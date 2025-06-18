@@ -1,0 +1,330 @@
+{
+	"info": {
+		"_postman_id": "076684d1-ba80-45fd-b45c-37aede86f81b",
+		"name": "EchoCRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "38248876"
+	},
+	"item": [
+		{
+			"name": "Establishment",
+			"item": [
+				{
+					"name": "GetAllEstabs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{api_prefix}}/establishments"
+					},
+					"response": []
+				},
+				{
+					"name": "CreateEstab",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Tech Solutions Ltda\",\r\n  \"corporate_number\": \"12.345.678/0001-90\",\r\n  \"corporate_name\": \"Tech Solutions Desenvolvimento de Software Ltda\",\r\n  \"address\": \"Rua das Tecnologias\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"SP\",\r\n  \"zip_code\": \"01234-567\",\r\n  \"number\": \"123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{api_prefix}}/establishments"
+					},
+					"response": []
+				},
+				{
+					"name": "GetEstabById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_prefix}}/establishments/:establishmentId",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"establishments",
+								":establishmentId"
+							],
+							"variable": [
+								{
+									"key": "establishmentId",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteEstab",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_prefix}}/establishments/:establishmentId",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"establishments",
+								":establishmentId"
+							],
+							"variable": [
+								{
+									"key": "establishmentId",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateEstab",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Olá testando\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_prefix}}/establishments/:establishmentId",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"establishments",
+								":establishmentId"
+							],
+							"variable": [
+								{
+									"key": "establishmentId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Store",
+			"item": [
+				{
+					"name": "GetAllStoresByEstab",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_prefix}}/establishments/:establishmentId/stores",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"establishments",
+								":establishmentId",
+								"stores"
+							],
+							"variable": [
+								{
+									"key": "establishmentId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetStoreById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_prefix}}/stores/:storeId",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"stores",
+								":storeId"
+							],
+							"variable": [
+								{
+									"key": "storeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteStore",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_prefix}}/stores/:storeId",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"stores",
+								":storeId"
+							],
+							"variable": [
+								{
+									"key": "storeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateStore",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Testando UPDATE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_prefix}}/stores/:storeId",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"stores",
+								":storeId"
+							],
+							"variable": [
+								{
+									"key": "storeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreateStore",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Loja Central São Paulo\",\r\n  \"store_number\": \"SP0123\",\r\n  \"store_name\": \"Tech Solutions - Unidade Paulista\",\r\n  \"address\": \"Avenida Paulista\",\r\n  \"city\": \"São Paulo\",\r\n  \"state\": \"SP\",\r\n  \"zip_code\": \"01310-100\",\r\n  \"number\": \"1000\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_prefix}}/establishments/:establishmentId/stores",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"establishments",
+								":establishmentId",
+								"stores"
+							],
+							"variable": [
+								{
+									"key": "establishmentId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateStore",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Testando UPDATE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_prefix}}/stores/:storeId",
+							"host": [
+								"{{api_prefix}}"
+							],
+							"path": [
+								"stores",
+								":storeId"
+							],
+							"variable": [
+								{
+									"key": "storeId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api_prefix",
+			"value": "http://localhost:3333/api/v1",
+			"type": "string"
+		}
+	]
+}

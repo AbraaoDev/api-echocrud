@@ -32,6 +32,13 @@ Bem-vindo ao projeto da EchoCRUD! Este repositório contém o código-fonte de u
 | **[`put`](#put)**       | `/stores/{storeId}`                          | Atualizar loja existente                    |
 | **[`delete`](#delete)** | `/stores/{storeId}`                          | Deletar loja por ID                         |
 
+## 📫 Testing with Postman
+
+To make API testing easier, a Postman collection is included in this repository. You can import it with a single click using the button below.
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://god.postman.com/run-collection/fork?collection_url=https://raw.githubusercontent.com/abraaodev/echocrud/main/postman/EchoCRUD_API.collection.json)
+
+
 
 ## 🧪 Technologies[Front-End]
 
