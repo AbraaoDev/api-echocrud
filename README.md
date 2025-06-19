@@ -25,13 +25,13 @@ Bem-vindo ao projeto da EchoCRUD! Este repositório contém o código-fonte de u
 
 ### Stores
 
-|        Endpoint         |                   Router                   |                 Description                 |
-| :---------------------: | :----------------------------------------: | :-----------------------------------------: |
-|    **[`get`](#get)**    | `/establishments/{establishmentId}/stores` | Buscar todas as lojas de um estabelecimento |
-|   **[`post`](#post)**   | `/establishments/{establishmentId}/stores` |    Criar nova loja em um estabelecimento    |
-|    **[`get`](#get)**    |            `/stores/{storeId}`             |             Buscar loja por ID              |
-|    **[`put`](#put)**    |            `/stores/{storeId}`             |          Atualizar loja existente           |
-| **[`delete`](#delete)** |            `/stores/{storeId}`             |             Deletar loja por ID             |
+|        Endpoint         |                        Router                        |                 Description                 |
+| :---------------------: | :--------------------------------------------------: | :-----------------------------------------: |
+|    **[`get`](#get)**    |      `/establishments/{establishmentId}/stores`      | Buscar todas as lojas de um estabelecimento |
+|   **[`post`](#post)**   |      `/establishments/{establishmentId}/stores`      |    Criar nova loja em um estabelecimento    |
+|    **[`get`](#get)**    | `/establishments/{establishmentId}/stores/{storeId}` |             Buscar loja por ID              |
+|    **[`put`](#put)**    | `/establishments/{establishmentId}/stores/{storeId}` |          Atualizar loja existente           |
+| **[`delete`](#delete)** | `/establishments/{establishmentId}/stores/{storeId}` |             Deletar loja por ID             |
 
 ## 📫 Testing with Postman
 
