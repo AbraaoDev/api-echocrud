@@ -4,6 +4,7 @@ import (
 	"echocrud/internal/entity"
 	"errors"
 
+	"github.com/jackc/pgx/v5/pgconn"
 	"gorm.io/gorm"
 )
 
@@ -20,6 +21,10 @@ func NewStoreRepository(db *gorm.DB) StoreRepository {
 func (sr *StoreRepository) CreateStore(store *entity.Store) (uint, error) {
 	err := sr.db.Create(store).Error
 	if err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) && pgErr.Code == "23505" {
+			return 0, ErrDuplicateStoreCorporateNumber
+		}
 		return 0, err
 	}
 	return store.ID, nil
@@ -28,6 +33,18 @@ func (sr *StoreRepository) CreateStore(store *entity.Store) (uint, error) {
 func (sr *StoreRepository) GetStoreByID(id_store uint) (*entity.Store, error) {
 	var store entity.Store
 	err := sr.db.First(&store, id_store).Error
+	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil 
+		}
+		return nil, err
+	}
+	return &store, nil
+}
+
+func (sr *StoreRepository) GetStoreByIDAndEstablishmentID(storeId, establishmentId uint) (*entity.Store, error) {
+	var store entity.Store
+	err := sr.db.Where("id = ? AND establishment_id = ?", storeId, establishmentId).First(&store).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			return nil, nil 

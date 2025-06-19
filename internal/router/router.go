@@ -22,13 +22,10 @@ func RegisterRoutes(server *echo.Echo, establishmentHandler *handler.Establishme
 		{
 			storesNestedGroup.POST("", storeHandler.CreateStore)
 			storesNestedGroup.GET("", storeHandler.GetAllStoresByEstablishment)
+			storesNestedGroup.GET("/:storeId", storeHandler.GetStoreByID)
+			storesNestedGroup.PUT("/:storeId", storeHandler.UpdateStore)
+			storesNestedGroup.DELETE("/:storeId", storeHandler.DeleteStore)
 		}
 	}
 
-	storesGroup := v1.Group("/stores")
-	{
-		storesGroup.GET("/:storeId", storeHandler.GetStoreByID)
-		storesGroup.PUT("/:storeId", storeHandler.UpdateStore)
-		storesGroup.DELETE("/:storeId", storeHandler.DeleteStore)
-	}
 }

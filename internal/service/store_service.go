@@ -35,13 +35,13 @@ func (ss *StoreService) CreateStore(store entity.Store) (*entity.Store, error) {
 	return &store, nil
 }
 
-func (ss *StoreService) GetStoreByID(id_store uint) (*entity.Store, error) {
-	store, err := ss.storeRepository.GetStoreByID(id_store)
+func (ss *StoreService) GetStoreByID(establishmentId, storeId uint) (*entity.Store, error) {
+	store, err := ss.storeRepository.GetStoreByIDAndEstablishmentID(storeId, establishmentId)
 	if err != nil {
 		return nil, err
 	}
 	if store == nil {
-		return nil, ErrStoreNotFound
+		return nil, ErrStoreNotFound 
 	}
 	return store, nil
 }
@@ -58,8 +58,8 @@ func (ss *StoreService) GetAllStoresByEstablishment(id_establishment uint) ([]en
 	return ss.storeRepository.GetAllStoresByEstablishment(id_establishment)
 }
 
-func (ss *StoreService) UpdateStore(id_store uint, storeData entity.Store) (*entity.Store, error) {
-	existingStore, err := ss.storeRepository.GetStoreByID(id_store)
+func (ss *StoreService) UpdateStore(establishmentId, storeId uint, storeData entity.Store) (*entity.Store, error) {
+	existingStore, err := ss.storeRepository.GetStoreByIDAndEstablishmentID(storeId, establishmentId)
 	if err != nil {
 		return nil, err
 	}
@@ -67,16 +67,16 @@ func (ss *StoreService) UpdateStore(id_store uint, storeData entity.Store) (*ent
 		return nil, ErrStoreNotFound
 	}
 
-	err = ss.storeRepository.UpdateStore(id_store, &storeData)
+	err = ss.storeRepository.UpdateStore(storeId, &storeData)
 	if err != nil {
 		return nil, err
 	}
 
-	return ss.storeRepository.GetStoreByID(id_store)
+	return ss.storeRepository.GetStoreByID(storeId)
 }
 
-func (ss *StoreService) DeleteStore(id_store uint) error {
-	existingStore, err := ss.storeRepository.GetStoreByID(id_store)
+func (ss *StoreService) DeleteStore(establishmentId, storeId uint) error {
+	existingStore, err := ss.storeRepository.GetStoreByIDAndEstablishmentID(storeId, establishmentId)
 	if err != nil {
 		return err
 	}
@@ -84,5 +84,5 @@ func (ss *StoreService) DeleteStore(id_store uint) error {
 		return ErrStoreNotFound
 	}
 
-	return ss.storeRepository.DeleteStore(id_store)
+	return ss.storeRepository.DeleteStore(storeId)
 }

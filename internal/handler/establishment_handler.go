@@ -2,6 +2,7 @@ package handler
 
 import (
 	"echocrud/internal/entity"
+	"echocrud/internal/repository"
 	"echocrud/internal/service"
 	"errors"
 	"net/http"
@@ -34,9 +35,7 @@ func (e *EstablishmentHandler) GetAll(c echo.Context) error {
 
 func (e *EstablishmentHandler) CreateEstablishment(c echo.Context) error {
 	var establishment entity.Establishment
-
-	err := c.Bind(&establishment)
-	if err != nil {
+	if err := c.Bind(&establishment); err != nil {
 		response := entity.Response{
 			Message: "Invalid JSON format or missing required fields",
 		}
@@ -44,8 +43,11 @@ func (e *EstablishmentHandler) CreateEstablishment(c echo.Context) error {
 	}
 
 	insertEstablishment, err := e.establishmentService.CreateEstablishment(establishment)
-
 	if err != nil {
+		if errors.Is(err, repository.ErrDuplicateCorporateNumber) {
+			return c.JSON(http.StatusConflict, entity.Response{Message: err.Error()})
+		}
+		
 		response := entity.Response{
 			Message: "Internal Server Error",
 		}
@@ -53,7 +55,6 @@ func (e *EstablishmentHandler) CreateEstablishment(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusCreated, insertEstablishment)
-
 }
 
 func (e *EstablishmentHandler) GetEstablishmentById(c echo.Context) error {

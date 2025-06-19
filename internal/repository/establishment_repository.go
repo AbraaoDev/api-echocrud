@@ -4,6 +4,7 @@ import (
 	"echocrud/internal/entity"
 	"errors"
 
+	"github.com/jackc/pgx/v5/pgconn"
 	"gorm.io/gorm"
 )
 
@@ -41,6 +42,10 @@ func (er *EstablishmentRepository) GetEstablishmentById(id_establishment uint) (
 func (er *EstablishmentRepository) CreateEstablishment(establishment *entity.Establishment) (uint, error) {
 	err := er.db.Create(establishment).Error
 	if err != nil {
+		var pgErr *pgconn.PgError
+		if errors.As(err, &pgErr) && pgErr.Code == "23505" {
+			return 0, ErrDuplicateCorporateNumber
+		}
 		return 0, err
 	}
 

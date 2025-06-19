@@ -2,6 +2,7 @@ package handler
 
 import (
 	"echocrud/internal/entity"
+	"echocrud/internal/repository"
 	"echocrud/internal/service"
 	"errors"
 	"net/http"
@@ -32,9 +33,13 @@ func (h *StoreHandler) CreateStore(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, entity.Response{Message: "Format JSON invalid"})
 	}
 
-	store.EstablishmentID = uint(establishmentId) 
+	store.EstablishmentID = uint(establishmentId)
 	createdStore, err := h.storeService.CreateStore(store)
 	if err != nil {
+		if errors.Is(err, repository.ErrDuplicateStoreCorporateNumber) {
+			return c.JSON(http.StatusConflict, entity.Response{Message: err.Error()})
+		}
+
 		if errors.Is(err, service.ErrEstablishmentNotFound) {
 			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
 		}
@@ -63,13 +68,17 @@ func (h *StoreHandler) GetAllStoresByEstablishment(c echo.Context) error {
 }
 
 func (h *StoreHandler) GetStoreByID(c echo.Context) error {
-	storeIdStr := c.Param("storeId")
-	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
+	establishmentId, err := strconv.ParseUint(c.Param("establishmentId"), 10, 32)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "establishmentId invalid"})
+	}
+
+	storeId, err := strconv.ParseUint(c.Param("storeId"), 10, 32)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, entity.Response{Message: "storeId invalid"})
 	}
 
-	store, err := h.storeService.GetStoreByID(uint(storeId))
+	store, err := h.storeService.GetStoreByID(uint(establishmentId), uint(storeId))
 	if err != nil {
 		if errors.Is(err, service.ErrStoreNotFound) {
 			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
@@ -81,8 +90,12 @@ func (h *StoreHandler) GetStoreByID(c echo.Context) error {
 }
 
 func (h *StoreHandler) UpdateStore(c echo.Context) error {
-	storeIdStr := c.Param("storeId")
-	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
+	establishmentId, err := strconv.ParseUint(c.Param("establishmentId"), 10, 32)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "establishmentId invalid"})
+	}
+
+	storeId, err := strconv.ParseUint(c.Param("storeId"), 10, 32)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, entity.Response{Message: "storeId invalid"})
 	}
@@ -92,7 +105,7 @@ func (h *StoreHandler) UpdateStore(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, entity.Response{Message: "Format JSON invalid"})
 	}
 
-	updatedStore, err := h.storeService.UpdateStore(uint(storeId), storeToUpdate)
+	updatedStore, err := h.storeService.UpdateStore(uint(establishmentId), uint(storeId), storeToUpdate)
 	if err != nil {
 		if errors.Is(err, service.ErrStoreNotFound) {
 			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
@@ -104,13 +117,17 @@ func (h *StoreHandler) UpdateStore(c echo.Context) error {
 }
 
 func (h *StoreHandler) DeleteStore(c echo.Context) error {
-	storeIdStr := c.Param("storeId")
-	storeId, err := strconv.ParseUint(storeIdStr, 10, 32)
+	establishmentId, err := strconv.ParseUint(c.Param("establishmentId"), 10, 32)
+	if err != nil {
+		return c.JSON(http.StatusBadRequest, entity.Response{Message: "establishmentId invalid"})
+	}
+
+	storeId, err := strconv.ParseUint(c.Param("storeId"), 10, 32)
 	if err != nil {
 		return c.JSON(http.StatusBadRequest, entity.Response{Message: "storeId invalid"})
 	}
 
-	err = h.storeService.DeleteStore(uint(storeId))
+	err = h.storeService.DeleteStore(uint(establishmentId), uint(storeId))
 	if err != nil {
 		if errors.Is(err, service.ErrStoreNotFound) {
 			return c.JSON(http.StatusNotFound, entity.Response{Message: err.Error()})
