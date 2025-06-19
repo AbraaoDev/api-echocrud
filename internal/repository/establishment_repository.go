@@ -27,7 +27,7 @@ func (er *EstablishmentRepository) GetAll() ([]entity.Establishment, error) {
 
 func (er *EstablishmentRepository) GetEstablishmentById(id_establishment uint) (*entity.Establishment, error) {
 	var establishment entity.Establishment
-	err := er.db.First(&establishment, id_establishment).Error
+	err := er.db.Preload("Stores").First(&establishment, id_establishment).Error
 	if err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) { 
 			return nil, nil 
