@@ -3,6 +3,8 @@
 Bem-vindo ao projeto da EchoCRUD! Este repositório contém o código-fonte de uma API RESTful, projetada para gerenciar Estabelecimentos e Lojas.
 
 > [!IMPORTANT]
+> ⚠️ Foi utilizado o GORM para gerar automaticamente os ID's de Estabelecimentos e Lojas, mas foi perceptível que não é uma boa prática. Os ID's sequenciais são um problema em termos de riscos de segurança e privacidade, criando brechas para IDOR.
+>
 > 🔄 Testes Unitários
 >
 > 🔄 SOLID
